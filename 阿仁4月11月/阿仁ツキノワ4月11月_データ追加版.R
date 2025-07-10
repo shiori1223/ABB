@@ -1,5 +1,5 @@
 ABB411<-read.csv("ABB_Apr_Nov_2.csv") #_2は250520のデータ追加版
-ABBhs<-read.csv("ABB_h_vs_a_2.csv")　#_2は250520のデータ追加版
+ABBha<-read.csv("ABB_h_vs_a_2.csv")　#_2は250520のデータ追加版
 
 library(ggplot2)
 library(dplyr)
@@ -11,8 +11,16 @@ library(ggpubr)
 ABB411$sampling_date2 <- as.Date(ABB411$sampling_date2)
 
 # ラベル表示したい日付と対応する表示形式
-breaks <- as.Date(c("2023-11-22", "2024-04-10", "2024-11-20", "2025-04-10"))
-labels <- c("2023-11", "2024-4", "2024-11", "2025-4")
+breaks <- as.Date(c("2023-11-22", "2024-04-10", "2024-11-20", "2025-04-10",
+                    "2010-11-22", "2010-11-23", "2011-04-18", "2011-04-19", 
+                    "2011-11-01", "2011-11-02", "2011-11-03", "2011-11-23", 
+                    "2012-04-19", "2012-11-01", "2017-11-03", "2018-05-13", 
+                    "2018-11-06", "2019-03-17"))
+labels <- c("2023-11", "2024-4", "2024-11", "2025-4",
+            "2010-11", "2010-11", "2011-4", "2011-4", 
+            "2011-11", "2011-11", "2011-11", "2011-11", 
+            "2012-4", "2012-11", "2017-11", "2018-5", 
+            "2018-11", "2019-3")
 
 # グラフ作成
 SLC1_411 <- ggplot(ABB411, aes(x = sampling_date2, 
@@ -95,12 +103,12 @@ SLC4_411 <- ggplot(ABB411, aes(x = sampling_date2,
 # 表示
 SLC4_411
 
-ggarrange(SLC1_411, SLC2_411, SLC3_411, SLC4_411, ncol=2, nrow=2, common.legend = TRUE, legend="right")
+ggarrange(SLC1_411, SLC2_411, SLC3_411, SLC4_411, ncol=1, nrow=4, common.legend = TRUE, legend="right")
 
 #●冬眠期間・活動期間中の変化の図
 library(tidyr)
 
-hs_1 <- ABBhs %>%
+ha_1 <- ABBha %>%
   select(bear_ID, change_h_1, change_a_1) %>%
   gather(key = "period", value = "methylation_change", -bear_ID) %>%
   mutate(period = recode(period, 
@@ -113,9 +121,9 @@ hs_1 <- ABBhs %>%
   theme_minimal() 
 
 # プロットを表示
-hs_1
+ha_1
 
-hs_2 <- ABBhs %>%
+ha_2 <- ABBha %>%
   select(bear_ID, change_h_2, change_a_2) %>%
   gather(key = "period", value = "methylation_change", -bear_ID) %>%
   mutate(period = recode(period, 
@@ -127,7 +135,7 @@ hs_2 <- ABBhs %>%
   theme(axis.text.x = element_text(angle = 90, hjust = 1))  +
   theme_minimal() 
 
-hs_3 <- ABBhs %>%
+ha_3 <- ABBha %>%
   select(bear_ID, change_h_3, change_a_3) %>%
   gather(key = "period", value = "methylation_change", -bear_ID) %>%
   mutate(period = recode(period, 
@@ -139,7 +147,7 @@ hs_3 <- ABBhs %>%
   theme(axis.text.x = element_text(angle = 90, hjust = 1))  +
   theme_minimal() 
 
-hs_4 <- ABBhs %>%
+ha_4 <- ABBha %>%
   select(bear_ID, change_h_4, change_a_4) %>%
   gather(key = "period", value = "methylation_change", -bear_ID) %>%
   mutate(period = recode(period, 
@@ -151,12 +159,12 @@ hs_4 <- ABBhs %>%
   theme(axis.text.x = element_text(angle = 90, hjust = 1))  +
   theme_minimal() 
 
-ggarrange(hs_1, hs_2, hs_3, hs_4, ncol=2, nrow=2, common.legend = TRUE, legend="right")
+ggarrange(ha_1, ha_2, ha_3, ha_4, ncol=2, nrow=2, common.legend = TRUE, legend="right")
 
 #●冬眠期間・活動期間中の1日あたりの変化の図
 library(tidyr)
 
-hsd_1 <- ABBhs %>%
+had_1 <- ABBha %>%
   select(bear_ID, daychange_h_1, daychange_a_1) %>%
   gather(key = "period", value = "methylation_change", -bear_ID) %>%
   mutate(period = recode(period, 
@@ -169,9 +177,9 @@ hsd_1 <- ABBhs %>%
   theme_minimal() 
 
 # プロットを表示
-hsd_1
+had_1
 
-hsd_2 <- ABBhs %>%
+had_2 <- ABBha %>%
   select(bear_ID, daychange_h_2, daychange_a_2) %>%
   gather(key = "period", value = "methylation_change", -bear_ID) %>%
   mutate(period = recode(period, 
@@ -183,7 +191,7 @@ hsd_2 <- ABBhs %>%
   theme(axis.text.x = element_text(angle = 90, hjust = 1))  +
   theme_minimal() 
 
-hsd_3 <- ABBhs %>%
+had_3 <- ABBha %>%
   select(bear_ID, daychange_h_3, daychange_a_3) %>%
   gather(key = "period", value = "methylation_change", -bear_ID) %>%
   mutate(period = recode(period, 
@@ -195,7 +203,7 @@ hsd_3 <- ABBhs %>%
   theme(axis.text.x = element_text(angle = 90, hjust = 1))  +
   theme_minimal() 
 
-hsd_4 <- ABBhs %>%
+had_4 <- ABBha %>%
   select(bear_ID, daychange_h_4, daychange_a_4) %>%
   gather(key = "period", value = "methylation_change", -bear_ID) %>%
   mutate(period = recode(period, 
@@ -207,7 +215,7 @@ hsd_4 <- ABBhs %>%
   theme(axis.text.x = element_text(angle = 90, hjust = 1))  +
   theme_minimal() 
 
-ggarrange(hsd_1, hsd_2, hsd_3, hsd_4, ncol=2, nrow=2, common.legend = TRUE, legend="right")
+ggarrange(had_1, had_2, had_3, had_4, ncol=2, nrow=2, common.legend = TRUE, legend="right")
 
 #●4月11月の推定年齢折れ線グラフ
 

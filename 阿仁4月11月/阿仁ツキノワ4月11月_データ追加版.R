@@ -219,14 +219,22 @@ ggarrange(had_1, had_2, had_3, had_4, ncol=2, nrow=2, common.legend = TRUE, lege
 
 #●4月11月の推定年齢折れ線グラフ
 
-ABB411age<-read.csv("predicted_age_result_ABB_Apr_Nov.csv")
+ABB411age<-read.csv("predicted_age_result_ABB_Apr_Nov_2.csv")
 
 # sampling_date2 を日付型に変換
 ABB411age$sampling_date2 <- as.Date(ABB411age$sampling_date2)
 
-# ラベル表示したい日付と対応する表示形式
-breaks <- as.Date(c("2023-11-22", "2024-04-10", "2024-11-20", "2025-04-10"))
-labels <- c("2023-11", "2024-4", "2024-11", "2025-4")
+# ラベル表示したい日付と対応する表示形式(同じだからいらないかも)
+breaks <- as.Date(c("2023-11-22", "2024-04-10", "2024-11-20", "2025-04-10",
+                    "2010-11-22", "2010-11-23", "2011-04-18", "2011-04-19", 
+                    "2011-11-01", "2011-11-02", "2011-11-03", "2011-11-23", 
+                    "2012-04-19", "2012-11-01", "2017-11-03", "2018-05-13", 
+                    "2018-11-06", "2019-03-17"))
+labels <- c("2023-11", "2024-4", "2024-11", "2025-4",
+            "2010-11", "2010-11", "2011-4", "2011-4", 
+            "2011-11", "2011-11", "2011-11", "2011-11", 
+            "2012-4", "2012-11", "2017-11", "2018-5", 
+            "2018-11", "2019-3")
 
 # グラフ作成
 ABBage_411_SRM <- ggplot(ABB411age, aes(x = sampling_date2, 
@@ -300,5 +308,5 @@ ABBage_411_SVRM <- ggplot(ABB411age, aes(x = sampling_date2,
   theme_minimal() +
   theme(legend.position = "right")
 
-ggarrange(ABBage_411_SRM, ABBage_411_PCRM, ABBage_411_ENRM, ABBage_411_SVRM, ncol=2, nrow=2, common.legend = TRUE, legend="right")
+ggarrange(ABBage_411_SRM, ABBage_411_PCRM, ABBage_411_ENRM, ABBage_411_SVRM, ncol=1, nrow=4, common.legend = TRUE, legend="right")
 
